@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="{{ PROJECT_AUTHOR }}">
+    <meta name="description" content="Freelancer CRM created by {{ PROJECT_AUTHOR }} — {{ PROJECT_SITE }}">
+    <title>{% block title %}Freelancer CRM{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <a href="{% url 'client-list' %}">Freelancer CRM</a>
+        </div>
+        <nav class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'client-list' %}">Clients</a>
+                <a href="{% url 'project-list' %}">Projects</a>
+                <a href="{% url 'invoice-list' %}">Invoices</a>
+                <span class="nav-user">Hi, {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message message-{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <p>Created by <strong>{{ PROJECT_AUTHOR }}</strong> — <a href="{{ PROJECT_SITE_URL }}" target="_blank" rel="noreferrer">{{ PROJECT_SITE }}</a></p>
+    </footer>
+</body>
+</html>

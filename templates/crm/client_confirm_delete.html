@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Delete {{ object.name }} | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 520px; margin: 0 auto;">
+    <h3>Delete client</h3>
+    <p>Are you sure you want to delete <strong>{{ object.name }}</strong>? This will remove related projects, invoices, and contact logs.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn danger">Yes, delete</button>
+        <a class="btn secondary" href="{% url 'client-detail' object.pk %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

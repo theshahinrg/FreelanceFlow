@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6fb;
+    color: #1f2430;
+}
+
+a {
+    color: #234aad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #1f2430;
+    color: #fff;
+}
+
+.navbar .brand a {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.nav-links a,
+.nav-user {
+    margin-left: 12px;
+    color: #e5e9f0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 16px;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #234aad;
+    background: #234aad;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn.secondary {
+    background: #fff;
+    color: #234aad;
+}
+
+.btn.danger {
+    border-color: #d14343;
+    background: #d14343;
+}
+
+form .form-row {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfd5e3;
+    border-radius: 8px;
+    background: #f8fafc;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px 8px;
+    text-align: left;
+}
+
+th {
+    background: #eef2f9;
+    font-weight: 700;
+}
+
+tr:nth-child(odd) {
+    background: #fafbff;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+}
+
+.message {
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #cfd5e3;
+    background: #fff;
+}
+
+.message-success {
+    border-color: #3cb179;
+    background: #e6f5ed;
+}
+
+.message-error {
+    border-color: #d14343;
+    background: #fdecea;
+}
+
+.muted {
+    color: #667191;
+}
+
+.footer {
+    text-align: center;
+    padding: 16px 0 24px;
+    color: #4b5675;
+    background: #eef2f9;
+}
+
+.footer a {
+    color: #234aad;
+    font-weight: 600;
+}

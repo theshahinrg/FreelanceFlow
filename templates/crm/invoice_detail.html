@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Invoice {{ invoice.number }} | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="flex-between card">
+    <div>
+        <h2 style="margin: 0;">Invoice {{ invoice.number }}</h2>
+        <p class="muted" style="margin: 4px 0 0 0;">Project: {{ invoice.project.name }}</p>
+    </div>
+    <div>
+        <a class="btn secondary" href="{% url 'invoice-update' invoice.pk %}">Edit</a>
+        <a class="btn secondary" href="{% url 'invoice-delete' invoice.pk %}">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <p><strong>Client:</strong> {{ invoice.project.client.name }}</p>
+    <p><strong>Status:</strong> {{ invoice.get_payment_status_display }}</p>
+    <p><strong>Amount:</strong> ${{ invoice.amount }}</p>
+    <p><strong>Issued:</strong> {{ invoice.issue_date }}</p>
+    <p><strong>Due:</strong> {{ invoice.due_date|default:"—" }}</p>
+</div>
+{% endblock %}

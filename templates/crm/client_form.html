@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ view.object|default_if_none:"New Client" }} | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 700px; margin: 0 auto;">
+    <h2>{{ view.object|default_if_none:"New Client" }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-row">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<small class="muted">{{ field.help_text }}</small>{% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">Save</button>
+    </form>
+</div>
+{% endblock %}

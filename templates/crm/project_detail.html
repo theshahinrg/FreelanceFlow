@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.name }} | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="flex-between card">
+    <div>
+        <h2 style="margin: 0;">{{ project.name }}</h2>
+        <p class="muted" style="margin: 4px 0 0 0;">Client: {{ project.client.name }}</p>
+    </div>
+    <div>
+        <a class="btn secondary" href="{% url 'project-update' project.pk %}">Edit</a>
+        <a class="btn secondary" href="{% url 'project-delete' project.pk %}">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <p><strong>Status:</strong> {{ project.get_status_display }}</p>
+    <p><strong>Amount:</strong> ${{ project.amount }}</p>
+    <p><strong>Timeline:</strong> {{ project.start_date|default:"—" }}{% if project.end_date %} → {{ project.end_date }}{% endif %}</p>
+    <p><strong>Description:</strong> {{ project.description|default:"—" }}</p>
+</div>
+
+<div class="card">
+    <div class="flex-between">
+        <h3 style="margin: 0;">Invoices</h3>
+        <a class="btn" href="{% url 'invoice-create' %}?project={{ project.pk }}">+ Invoice</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+                <tr>
+                    <td><a href="{% url 'invoice-detail' invoice.pk %}">{{ invoice.number }}</a></td>
+                    <td>{{ invoice.get_payment_status_display }}</td>
+                    <td>${{ invoice.amount }}</td>
+                    <td>{{ invoice.due_date|default:"—" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4" class="muted">No invoices yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

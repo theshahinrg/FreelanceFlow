@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Invoices | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="flex-between card">
+    <div>
+        <h2 style="margin: 0;">Invoices</h2>
+        <p class="muted" style="margin: 4px 0 0 0;">Track billing and payment status.</p>
+    </div>
+    <a class="btn" href="{% url 'invoice-create' %}">+ New Invoice</a>
+</div>
+
+<div class="card">
+    <form method="get" class="filter-grid">
+        <div class="form-row">
+            <label for="payment_status">Payment status</label>
+            <select id="payment_status" name="payment_status">
+                <option value="">All</option>
+                {% for value, label in payment_statuses %}
+                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-row" style="align-self: flex-end;">
+            <button type="submit" class="btn secondary">Apply</button>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Project</th>
+                <th>Client</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+                <tr>
+                    <td><a href="{% url 'invoice-detail' invoice.pk %}">{{ invoice.number }}</a></td>
+                    <td>{{ invoice.project.name }}</td>
+                    <td>{{ invoice.project.client.name }}</td>
+                    <td>{{ invoice.get_payment_status_display }}</td>
+                    <td>${{ invoice.amount }}</td>
+                    <td>{{ invoice.due_date|default:"—" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="6" class="muted">No invoices yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

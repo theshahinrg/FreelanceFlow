@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}{{ client.name }} | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="flex-between card">
+    <div>
+        <h2 style="margin: 0;">{{ client.name }}</h2>
+        <p class="muted" style="margin: 4px 0 0 0;">{{ client.company|default:"No company" }}</p>
+    </div>
+    <div>
+        <a class="btn secondary" href="{% url 'client-update' client.pk %}">Edit</a>
+        <a class="btn secondary" href="{% url 'client-delete' client.pk %}">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Details</h3>
+    <p><strong>Email:</strong> {{ client.email }}</p>
+    <p><strong>Phone:</strong> {{ client.phone|default:"—" }}</p>
+    <p><strong>Notes:</strong> {{ client.notes|default:"—" }}</p>
+</div>
+
+<div class="card">
+    <div class="flex-between">
+        <h3 style="margin: 0;">Projects</h3>
+        <a class="btn" href="{% url 'project-create' %}?client={{ client.pk }}">+ Project</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Dates</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td><a href="{% url 'project-detail' project.pk %}">{{ project.name }}</a></td>
+                    <td>{{ project.get_status_display }}</td>
+                    <td>${{ project.amount }}</td>
+                    <td>{{ project.start_date|default:"—" }}{% if project.end_date %} → {{ project.end_date }}{% endif %}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4" class="muted">No projects yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <div class="flex-between">
+        <h3 style="margin: 0;">Invoices</h3>
+        <a class="btn" href="{% url 'invoice-create' %}">+ Invoice</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+                <tr>
+                    <td><a href="{% url 'invoice-detail' invoice.pk %}">{{ invoice.number }}</a></td>
+                    <td>{{ invoice.project.name }}</td>
+                    <td>{{ invoice.get_payment_status_display }}</td>
+                    <td>${{ invoice.amount }}</td>
+                    <td>{{ invoice.due_date|default:"—" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5" class="muted">No invoices yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <div class="flex-between">
+        <h3 style="margin: 0;">Contact Log</h3>
+        <a class="btn secondary" href="{% url 'contactlog-create' client.pk %}">Add Log</a>
+    </div>
+    <ul style="list-style: none; padding-left: 0;">
+        {% for log in contact_logs %}
+            <li style="padding: 8px 0; border-bottom: 1px solid #eef2f9;">
+                <strong>{{ log.get_contact_type_display }}</strong> on {{ log.contacted_at|date:"M j, Y H:i" }}{% if log.project %} about {{ log.project.name }}{% endif %}<br>
+                <span class="muted">{{ log.notes }}</span>
+            </li>
+        {% empty %}
+            <li class="muted">No contact history yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

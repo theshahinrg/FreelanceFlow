@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | Freelancer CRM{% endblock %}
+
+{% block content %}
+<div class="flex-between card">
+    <div>
+        <h2 style="margin: 0;">Projects</h2>
+        <p class="muted" style="margin: 4px 0 0 0;">Overview of active work.</p>
+    </div>
+    <a class="btn" href="{% url 'project-create' %}">+ New Project</a>
+</div>
+
+<div class="card">
+    <form method="get" class="filter-grid">
+        <div class="form-row">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="">All</option>
+                {% for value, label in statuses %}
+                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-row" style="align-self: flex-end;">
+            <button type="submit" class="btn secondary">Apply</button>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Client</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Dates</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td><a href="{% url 'project-detail' project.pk %}">{{ project.name }}</a></td>
+                    <td>{{ project.client.name }}</td>
+                    <td>{{ project.get_status_display }}</td>
+                    <td>${{ project.amount }}</td>
+                    <td>{{ project.start_date|default:"—" }}{% if project.end_date %} → {{ project.end_date }}{% endif %}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5" class="muted">No projects yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
