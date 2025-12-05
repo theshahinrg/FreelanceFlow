@@ -14,19 +14,23 @@ Simple CRM for freelancers to keep track of clients, projects, invoices, and con
    ```bash
    pip install -r requirements.txt
    ```
-2. Run database migrations:
+2. Generate migration files (whenever you change your models):
+   ```bash
+   python manage.py makemigrations
+   ```
+3. Run database migrations:
    ```bash
    python manage.py migrate
    ```
-3. Create a superuser (for admin access):
+4. Create a superuser (for admin access):
    ```bash
    python manage.py createsuperuser
    ```
-4. Start the dev server:
+5. Start the dev server:
    ```bash
    python manage.py runserver
    ```
-5. Log in at `/accounts/login/` and start adding clients, projects, and invoices. The Django admin is available at `/admin/`.
+6. Log in at `/accounts/login/` and start adding clients, projects, and invoices. The Django admin is available at `/admin/`.
 
 ## Running tests
 ```bash
